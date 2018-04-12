@@ -1,0 +1,28 @@
+{
+  "name": "webmap-hover-template",
+  "version": "0.0.1",
+  "main": "init.js",
+  "description": "Configurable app that provides option for popup on hover",
+  "keywords": [
+    "Esri",
+    "ArcGIS",
+    "TypeScript"
+  ],
+  "dependencies": {
+    "tslint": "^5.9.1"
+  },
+  "devDependencies": {
+    "@types/arcgis-js-api": "^4.6.0",
+    "calcite-web": "github:Esri/calcite-web#v1.0.0-rc.8",
+    "dojo-typings": "^1.11.9",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.8.1"
+  },
+  "scripts": {
+    "watch": "tsc --watch",
+    "tsc": "tsc",
+    "dev": "npm run tsc"
+  },
+  "author": "",
+  "license": "ISC"
+}
