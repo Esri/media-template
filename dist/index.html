@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- End Responsive -->
+  <link rel=icon href=assets/favicon.ico sizes="32x32" type="image/vnd.microsoft.icon">
+  <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-rc.8/css/calcite-web.min.css">
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.7/esri/css/main.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body class="configurable-application--loading">
+  <script type="text/javascript" src="./config/dojo.js"></script>
+  <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-rc.8/js/calcite-web.min.js"></script>
+  <script>
+    calcite.init();
+  </script>
+  <script type="text/javascript" src="https://js.arcgis.com/4.7/"></script>
+  <script type="text/javascript" src="./app/init.js"></script>
+
+
+  <div id="viewContainer" class="configurable-application__view-container" role="application">
+  </div>
+  <div id="scroller" class="alert alert-full text-center">
+    <div id="scrollMessage" class="font-size-3 text-darker-gray alert-text"></div>
+  </div>
+  <div id="splash" class="js-modal modal-overlay" data-modal="splash-modal">
+    <div class="modal-content column-12" role="dialog" aria-labelledby="modal" role="dialog">
+      <h3 id="splash-title" class='trailer-half'></h3>
+      <p id="splash-content"></p>
+      <div class="text-right">
+        <button id="splash-button" class="btn js-modal-toggle"></button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
