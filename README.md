@@ -1,5 +1,28 @@
 # media-template
-Source code for the Media configurable app 
+Source code for the Media configurable app available in the ArcGIS Online template gallery. 
+
+Media Map is a configurable app template for displaying an interactive map with basic tools and a set of options for limiting map navigation. Designed to fit into small spaces on a web page or as a standalone app.
+
+
+
+## Configurable Options
+
+Use Media Map to present content from a map and configure it using the following options:
+
+* Support your map with descriptive text by including an info panel with a title and description, and/or a splash screen to help orient your audience and prime them to receive your message.
+* Enable tools on the map including a legend, basemap toggle, overview map, etc.
+* Keep your audience focused on what is important by configuring options for map navigation by choosing to include zoom buttons, bookmarks, search, defining min/max zoom levels, or preventing scrolling of the map.
+* Use custom CSS to customize the look and feel of the app.
+
+## Use Cases
+
+* Create a simple app to allow users to navigate to predefined locations.
+* Optimize your map for consumption on a mobile device by preventing map scrolling.
+* Let your user choose between two basemaps to experience different perspectives on your phenomena.
+* Sprinkle geography all over the web by adding a spatial component to your web page.
+* Create a detailed local map with an overview to provide global context. 
+
+
 
 
 ## Instructions
