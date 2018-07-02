@@ -35,7 +35,8 @@ import {
   getItemTitle,
   findQuery,
   goToMarker
-} from "ApplicationBase/support/itemUtils";
+}
+  from "ApplicationBase/support/itemUtils";
 
 import {
   setPageLocale,
@@ -105,8 +106,8 @@ class MapExample {
       return;
     }
 
-    config.title = !this.base.config.title ? getItemTitle(firstItem) : "";
-    setPageTitle(this.base.config.title);
+    config.title = !this.base.config.detailsTitle ? getItemTitle(firstItem) : this.base.config.detailsTitle;
+    setPageTitle(config.title);
 
     if (this.base.config.customstyle) {
       const style = document.createElement("style");
@@ -117,6 +118,7 @@ class MapExample {
     // setup splash modal
     if (this.base.config.splash) {
       window.calcite.modal();
+
       document.getElementById(
         "splash-button"
       ).innerHTML = this.base.config.splashButtonText;
@@ -126,12 +128,11 @@ class MapExample {
       document.getElementById(
         "splash-content"
       ).innerHTML = this.base.config.splashContent;
-
-      window.calcite.bus.emit("modal:open", "splash-modal");
+      window.calcite.bus.emit("modal:open", { id: "splash-modal" });
       window.calcite.bus.emit("modal:bind");
     }
     const appProxies =
-      portalItem && portalItem.appProxies ? portalItem.appProxies : null;
+      portalItem && portalItem.applicationProxies ? portalItem.applicationProxies : null;
 
     const viewContainerNode = document.getElementById("viewContainer");
     // Get url properties like center, extent, zoom
@@ -243,8 +244,6 @@ class MapExample {
     }
   }
   addDetails(item) {
-    //TODO add shared theming colors
-
     if (this.base.config.details) {
       const title = this.base.config.detailsTitle || item.title;
 
@@ -260,13 +259,15 @@ class MapExample {
       panel.innerHTML = `<h4 class='trailer-half'>${title}</h4><p>${panelText}</p>`;
 
       const expand = new Expand({
-        content: `<h4 class='trailer-half'>${title}</h4><p>${panelText}</p>`,
+        content: `<div class="panel" style='min-width:200px;background-color:${this.base.config.detailsBackgroundColor};color:${this.base.config.detailsTextColor}'><h4 class='trailer-half'>${title}</h4><p>${panelText}</p></div>`,
         expandIconClass: "esri-icon-description",
         view: this.view,
-        expandTooltip: "Info" // TODO I18n
+        group: this.base.config.detailsPosition,
+        expandTooltip: i18n.widgets.details.label
       });
       const index = this.base.config.detailsIndex === "first" ? 0 : 4;
-      let isSmall = this.view.widthBreakpoint === "xsmall";
+      let isSmall = this.view.widthBreakpoint === "xsmall" || this.view.widthBreakpoint === "small" || this.view.widthBreakpoint === "medium";
+
       const panelComponent: __esri.UIAddComponent = {
         component: isSmall ? expand : panel,
         position: this.base.config.detailsPosition,
@@ -275,9 +276,12 @@ class MapExample {
 
       this.view.ui.add(panelComponent);
 
-      // if the view is small put panel in info button
+      // if the view is small, xsmall or medium put panel in info button
       this.view.watch("widthBreakpoint", breakpoint => {
-        isSmall = breakpoint === "xsmall";
+        let isSmall = false;
+        if (breakpoint === "xsmall" || breakpoint === "small" || breakpoint === "medium") {
+          isSmall = true;
+        }
         this.view.ui.remove(isSmall ? panel : expand);
         panelComponent.component = isSmall ? expand : panel;
         this.view.ui.add(panelComponent);
@@ -292,23 +296,19 @@ class MapExample {
       const bookmarks = webmap.bookmarks;
       if (bookmarks && bookmarks.length && bookmarks.length > 0) {
         const bookmarksRequire = await requireUtils.when(require, [
-          "Custom/Bookmarks"
+          "esri/widgets/Bookmarks"
         ]);
         const Bookmarks = bookmarksRequire[0];
-        // insert bookmark css 
-        var head = document.getElementsByTagName('head')[0];
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = 'styles/Bookmarks.min.css';
-        head.appendChild(link);
+
         const bookmarkWidget = new Bookmarks({
-          view: this.view
+          view: this.view,
+          bookmarks: bookmarks
         });
         const bookmarkExpand = new Expand({
           view: this.view,
           content: bookmarkWidget,
-          expandTooltip: "Bookmarks" // todo I18n
+          group: this.base.config.bookmarksPosition//,
+          // expandTooltip: Bookmarks//i18n.widgets.bookmark.label
         });
 
         this.view.ui.add(bookmarkExpand, this.base.config.bookmarksPosition);
@@ -346,16 +346,18 @@ class MapExample {
 
       const legend = new Legend({
         view: this.view,
+        style: this.base.config.legendStyle === "default" || this.base.config.legendStyle === "classic" ? "classic" : "card",
         container: document.createElement("div")
       });
 
       const legendExpand = new Expand({
         expandIconClass: "esri-icon-layer-list",
+        group: this.base.config.legendPosition,
         view: this.view,
-
         content: legend.container,
-        expandTooltip: "Legend" // TODO i18n
+        expandTooltip: legend.label
       });
+
       this.view.ui.add(legendExpand, this.base.config.legendPosition);
       if (this.base.config.legendOpenAtStart) {
         legendExpand.expand();
@@ -373,10 +375,12 @@ class MapExample {
       });
       const searchExpand = new Expand({
         expandIconClass: "esri-icon-search",
+        group: this.base.config.searchPosition,
         view: this.view,
         content: search.container,
-        expandTooltip: "Search" // TODO i18n
+        expandTooltip: search.label
       });
+
       this.view.ui.add(searchExpand, this.base.config.searchPosition);
       if (this.base.config.searchOpenAtStart) {
         searchExpand.expand();

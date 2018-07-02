@@ -193,6 +193,20 @@
                 "type": "boolean",
                 "fieldName": "legendOpenAtStart",
                 "label": "Legend open at start"
+            }, {
+                "type": "paragraph",
+                "value": "Display the legend using the default style or the card style. The card style is a responsive style that displays the legend with a horizontal layout in large views and a compact card layout in small views."
+            }, {
+                "type": "options",
+                "fieldName": "legendStyle",
+                "label": "Legend style",
+                "options": [{
+                    "label": "Default",
+                    "value": "default"
+                }, {
+                    "label": "Card",
+                    "value": "card"
+                }]
             }]
 
         }, {
@@ -201,6 +215,9 @@
             "label": "Fullscreen",
             "condition": false,
             "items": [{
+                "type": "paragraph",
+                "value": "Note: Fullscreen does not display the app full screen if the app is embedded into another page using an iframe."
+            }, {
                 "type": "options",
                 "fieldName": "fullscreenPosition",
                 "label": "Fullscreen location",
@@ -369,6 +386,7 @@
         "legend": false,
         "legendPosition": "top-left",
         "legendOpenAtStart": false,
+        "legendStyle": "default",
         "fullscreen": false,
         "fullscreenPosition": "top-right",
         "inset": false,

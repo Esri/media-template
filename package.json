@@ -9,19 +9,22 @@
     "TypeScript"
   ],
   "dependencies": {
-    "tslint": "^5.9.1"
+    "@esri/application-base-js": "0.0.2",
+    "node-sass": "^4.9.0",
+    "npm": "^6.0.0",
+    "npm-run-all": "^4.1.2"
   },
   "devDependencies": {
-    "@types/arcgis-js-api": "^4.6.0",
-    "calcite-web": "github:Esri/calcite-web#v1.0.0-rc.8",
-    "dojo-typings": "^1.11.9",
-    "tsc": "^1.20150623.0",
-    "typescript": "^2.8.1"
+    "@types/arcgis-js-api": "^4.7.0",
+    "calcite-web": "github:Esri/calcite-web",
+    "cpx": "^1.5.0",
+    "dojo-typings": "^1.11.9"
   },
   "scripts": {
-    "watch": "tsc --watch",
-    "tsc": "tsc",
-    "dev": "npm run tsc"
+    "copy:node_modules": "./node_modules/.bin/cpx './node_modules/@esri/**/*.ts' ./src/app",
+    "start": "npm-run-all --parallel watch:sass watch:ts",
+    "watch:ts": "tsc --watch",
+    "watch:sass": "./node_modules/.bin/node-sass --watch ./src/styles -o ./dist/styles"
   },
   "author": "",
   "license": "ISC"

@@ -42,8 +42,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -104,8 +104,8 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                 console.error("Could not load an item to display");
                 return;
             }
-            config.title = !this.base.config.title ? itemUtils_1.getItemTitle(firstItem) : "";
-            domHelper_1.setPageTitle(this.base.config.title);
+            config.title = !this.base.config.detailsTitle ? itemUtils_1.getItemTitle(firstItem) : this.base.config.detailsTitle;
+            domHelper_1.setPageTitle(config.title);
             if (this.base.config.customstyle) {
                 var style = document.createElement("style");
                 style.appendChild(document.createTextNode(this.base.config.customstyle));
@@ -118,10 +118,10 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                 document.getElementById("splash-button").innerHTML = this.base.config.splashButtonText;
                 document.getElementById("splash-title").innerHTML = this.base.config.splashTitle;
                 document.getElementById("splash-content").innerHTML = this.base.config.splashContent;
-                window.calcite.bus.emit("modal:open", "splash-modal");
+                window.calcite.bus.emit("modal:open", { id: "splash-modal" });
                 window.calcite.bus.emit("modal:bind");
             }
-            var appProxies = portalItem && portalItem.appProxies ? portalItem.appProxies : null;
+            var appProxies = portalItem && portalItem.applicationProxies ? portalItem.applicationProxies : null;
             var viewContainerNode = document.getElementById("viewContainer");
             // Get url properties like center, extent, zoom
             var defaultViewProperties = itemUtils_1.getConfigViewProperties(config);
@@ -210,7 +210,6 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
             }
         };
         MapExample.prototype.addDetails = function (item) {
-            //TODO add shared theming colors
             var _this = this;
             if (this.base.config.details) {
                 var title = this.base.config.detailsTitle || item.title;
@@ -224,31 +223,35 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                 panel_1.classList.add("panel");
                 panel_1.innerHTML = "<h4 class='trailer-half'>" + title + "</h4><p>" + panelText + "</p>";
                 var expand_1 = new Expand({
-                    content: "<h4 class='trailer-half'>" + title + "</h4><p>" + panelText + "</p>",
+                    content: "<div class=\"panel\" style='min-width:200px;background-color:" + this.base.config.detailsBackgroundColor + ";color:" + this.base.config.detailsTextColor + "'><h4 class='trailer-half'>" + title + "</h4><p>" + panelText + "</p></div>",
                     expandIconClass: "esri-icon-description",
                     view: this.view,
-                    expandTooltip: "Info" // TODO I18n
+                    group: this.base.config.detailsPosition,
+                    expandTooltip: i18n.widgets.details.label
                 });
                 var index = this.base.config.detailsIndex === "first" ? 0 : 4;
-                var isSmall_1 = this.view.widthBreakpoint === "xsmall";
+                var isSmall = this.view.widthBreakpoint === "xsmall" || this.view.widthBreakpoint === "small" || this.view.widthBreakpoint === "medium";
                 var panelComponent_1 = {
-                    component: isSmall_1 ? expand_1 : panel_1,
+                    component: isSmall ? expand_1 : panel_1,
                     position: this.base.config.detailsPosition,
                     index: this.base.config.detailsIndex === "first" ? 0 : 20
                 };
                 this.view.ui.add(panelComponent_1);
-                // if the view is small put panel in info button
+                // if the view is small, xsmall or medium put panel in info button
                 this.view.watch("widthBreakpoint", function (breakpoint) {
-                    isSmall_1 = breakpoint === "xsmall";
-                    _this.view.ui.remove(isSmall_1 ? panel_1 : expand_1);
-                    panelComponent_1.component = isSmall_1 ? expand_1 : panel_1;
+                    var isSmall = false;
+                    if (breakpoint === "xsmall" || breakpoint === "small" || breakpoint === "medium") {
+                        isSmall = true;
+                    }
+                    _this.view.ui.remove(isSmall ? panel_1 : expand_1);
+                    panelComponent_1.component = isSmall ? expand_1 : panel_1;
                     _this.view.ui.add(panelComponent_1);
                 });
             }
         };
         MapExample.prototype.addWidgets = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var webmap, bookmarks, bookmarksRequire, Bookmarks, head, link, bookmarkWidget, bookmarkExpand, fullScreenRequire, Fullscreen, full, homeRequire, Home, home, legendRequire, Legend, legend, legendExpand, searchRequire, Search, search, searchExpand, basemapRequire, BasemapToggle, basemapToggle;
+                var webmap, bookmarks, bookmarksRequire, Bookmarks, bookmarkWidget, bookmarkExpand, fullScreenRequire, Fullscreen, full, homeRequire, Home, home, legendRequire, Legend, legend, legendExpand, searchRequire, Search, search, searchExpand, basemapRequire, BasemapToggle, basemapToggle;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -257,24 +260,20 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                             bookmarks = webmap.bookmarks;
                             if (!(bookmarks && bookmarks.length && bookmarks.length > 0)) return [3 /*break*/, 2];
                             return [4 /*yield*/, requireUtils.when(require, [
-                                    "Custom/Bookmarks"
+                                    "esri/widgets/Bookmarks"
                                 ])];
                         case 1:
                             bookmarksRequire = _a.sent();
                             Bookmarks = bookmarksRequire[0];
-                            head = document.getElementsByTagName('head')[0];
-                            link = document.createElement('link');
-                            link.rel = 'stylesheet';
-                            link.type = 'text/css';
-                            link.href = 'styles/Bookmarks.min.css';
-                            head.appendChild(link);
                             bookmarkWidget = new Bookmarks({
-                                view: this.view
+                                view: this.view,
+                                bookmarks: bookmarks
                             });
                             bookmarkExpand = new Expand({
                                 view: this.view,
                                 content: bookmarkWidget,
-                                expandTooltip: "Bookmarks" // todo I18n
+                                group: this.base.config.bookmarksPosition //,
+                                // expandTooltip: Bookmarks//i18n.widgets.bookmark.label
                             });
                             this.view.ui.add(bookmarkExpand, this.base.config.bookmarksPosition);
                             _a.label = 2;
@@ -317,13 +316,15 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                             Legend = legendRequire[0];
                             legend = new Legend({
                                 view: this.view,
+                                style: this.base.config.legendStyle === "default" || this.base.config.legendStyle === "classic" ? "classic" : "card",
                                 container: document.createElement("div")
                             });
                             legendExpand = new Expand({
                                 expandIconClass: "esri-icon-layer-list",
+                                group: this.base.config.legendPosition,
                                 view: this.view,
                                 content: legend.container,
-                                expandTooltip: "Legend" // TODO i18n
+                                expandTooltip: legend.label
                             });
                             this.view.ui.add(legendExpand, this.base.config.legendPosition);
                             if (this.base.config.legendOpenAtStart) {
@@ -344,9 +345,10 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                             });
                             searchExpand = new Expand({
                                 expandIconClass: "esri-icon-search",
+                                group: this.base.config.searchPosition,
                                 view: this.view,
                                 content: search.container,
-                                expandTooltip: "Search" // TODO i18n
+                                expandTooltip: search.label
                             });
                             this.view.ui.add(searchExpand, this.base.config.searchPosition);
                             if (this.base.config.searchOpenAtStart) {
@@ -400,8 +402,8 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
         };
         MapExample.prototype.createOverviewMap = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var _this = this;
                 var mapRequire, Map, map, insetDiv, insetView;
+                var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, requireUtils.when(require, ["esri/Map"])];
@@ -453,3 +455,4 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
     }());
     return MapExample;
 });
+//# sourceMappingURL=Main.js.map

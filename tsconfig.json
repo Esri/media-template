@@ -8,14 +8,14 @@
     ],
     "module": "amd",
     "noImplicitAny": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "jsx": "react",
     "jsxFactory": "tsx",
     "target": "es5",
     "experimentalDecorators": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist/"
+    "outDir": "dist/app"
   },
   "include": [
     "./**/*"

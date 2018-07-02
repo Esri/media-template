@@ -26,7 +26,7 @@
             },
             {
                 name: "ApplicationBase",
-                location: packagePath + "/ApplicationBase",
+                location: packagePath + "/app/application-base-js",
                 main: "ApplicationBase"
             },
             {

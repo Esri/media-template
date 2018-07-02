@@ -33,7 +33,6 @@
     "level",
     "marker",
     "oauthappid",
-    "portalUrl",
     "viewpoint",
     "webmap",
     "legend",
@@ -42,7 +41,9 @@
     "home",
     "mapZoom",
     "basemapToggle",
+    "sharingUrl",
     "details",
+    "search",
     "splash"
   ],
   "webMap": {

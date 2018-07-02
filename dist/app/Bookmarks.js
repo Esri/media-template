@@ -16,7 +16,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/watchUtils", "esri/core/accessorSupport/decorators", "esri/widgets/Widget", "esri/core/HandleRegistry", "esri/widgets/support/widget", "./Bookmarks/BookmarksViewModel"], function (require, exports, __extends, __decorate, watchUtils, decorators_1, Widget, HandleRegistry, widget_1, BookmarksViewModel) {
+define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/watchUtils", "esri/core/accessorSupport/decorators", "esri/widgets/Widget", "esri/core/Handles", "esri/widgets/support/widget", "./Bookmarks/BookmarksViewModel"], function (require, exports, __extends, __decorate, watchUtils, decorators_1, Widget, HandleRegistry, widget_1, BookmarksViewModel) {
     "use strict";
     var CSS = {
         base: "demo-bookmarks",
@@ -159,3 +159,4 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
     }(decorators_1.declared(Widget)));
     return Bookmarks;
 });
+//# sourceMappingURL=Bookmarks.js.map
