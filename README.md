@@ -23,14 +23,20 @@ Use Media Map to present content from a map and configure it using the following
 * Create a detailed local map with an overview to provide global context. 
 
 
+## Requirements 
+* Code Editor 
+* Node and NPM 
+* Experience with TypeScript, HTML and CSS
+* Experience with the ArcGIS API for JavaScript 
 
 
 ## Instructions
 
 1. Download and unzip the .zip file or clone the repository.
 2. Web-enable the directory.
-3. Access the .html page.
-4. Start writing your template!
+3. Access the .html page to test. 
+4. Install node and npm then run npm install via the command line. 
+5. Start customizing the app code.
 
 [New to Github? Get started here.](https://github.com/)
 
