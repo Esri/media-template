@@ -266,7 +266,7 @@ class ApplicationBase {
 
         this.units = this._getUnits(portal);
         esriConfig.fontsUrl = this._getFontsUrl(portal);
-        console.log("esriConfig", esriConfig);
+
         this.config = this._mixinAllConfigs({
           config: this.config,
           url: urlParams,
@@ -274,7 +274,6 @@ class ApplicationBase {
           application: applicationConfig
         });
 
-        this._setUpCORS(portal.authorizedCrossOriginDomains, webTierSecurity);
         this._setGeometryService(this.config, portal);
 
         const { webmap, webscene, group } = this.config;
@@ -591,21 +590,7 @@ class ApplicationBase {
     };
   }
 
-  private _setUpCORS(authorizedDomains: string[], webTierSecurity: boolean): void {
-    if (!webTierSecurity || !authorizedDomains || !authorizedDomains.length) {
-      return;
-    }
 
-    authorizedDomains.forEach(authorizedDomain => {
-      const isDefined = (authorizedDomain !== undefined) && (authorizedDomain !== null);
-      if (isDefined && authorizedDomain.length) {
-        esriConfig.request.corsEnabledServers.push({
-          host: authorizedDomain,
-          withCredentials: true
-        });
-      }
-    });
-  }
 
   private _setGeometryService(config: ApplicationConfig, portal: Portal): void {
     const configHelperServices = config.helperServices;

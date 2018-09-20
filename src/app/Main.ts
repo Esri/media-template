@@ -50,14 +50,11 @@ import {
 } from "ApplicationBase/interfaces";
 
 import Graphic = require("esri/Graphic");
-import FeatureLayer = require("esri/layers/FeatureLayer");
-import GraphicsLayer = require("esri/layers/GraphicsLayer");
-import Collection = require("esri/core/Collection");
+
 import MapView = require("esri/views/MapView");
 
 import Expand = require("esri/widgets/Expand");
 
-import watchUtils = require("esri/core/watchUtils");
 import requireUtils = require("esri/core/requireUtils");
 
 
@@ -91,7 +88,7 @@ class MapExample {
 
     this.base = base;
 
-    const { config, results, settings } = base;
+    const { config, results } = base;
     const { find, marker } = config;
     const { webMapItems } = results;
 
@@ -147,7 +144,6 @@ class MapExample {
         ...defaultViewProperties
       };
 
-      const { basemapUrl, basemapReferenceUrl } = config;
       createMapFromItem({ item, appProxies }).then(map =>
         createView({
           ...viewProperties,
@@ -155,56 +151,57 @@ class MapExample {
         })
           .then(view => {
             this.view = view as MapView;
+            this.view.when(() => {
+              findQuery(find, this.view).then(() => goToMarker(marker, this.view))
+              if (
+                this.base.config.mapZoom &&
+                this.base.config.mapZoomPosition !== "top-left"
+              ) {
+                this.view.ui.move("zoom", this.base.config.mapZoomPosition);
+              } else if (!this.base.config.mapZoom) {
+                this.view.ui.remove("zoom");
+              }
 
-            if (
-              this.base.config.mapZoom &&
-              this.base.config.mapZoomPosition !== "top-left"
-            ) {
-              this.view.ui.move("zoom", this.base.config.mapZoomPosition);
-            } else if (!this.base.config.mapZoom) {
-              this.view.ui.remove("zoom");
-            }
+              if (this.base.config.viewMinScale) {
+                this.view.constraints.minScale = this.base.config.viewMinScale;
+              }
 
-            if (this.base.config.viewMinScale) {
-              this.view.constraints.minScale = this.base.config.viewMinScale;
-            }
+              if (this.base.config.viewMaxScale) {
+                this.view.constraints.maxScale = this.base.config.viewMaxScale;
+              }
+              if (this.base.config.highlightColor) {
+                this.view.highlightOptions.color = this.base.config
+                  .highlightColor as any;
+              }
+              if (this.base.config.highlightFillOpacity) {
+                this.view.highlightOptions.fillOpacity = this.base.config.highlightFillOpacity;
+              }
+              if (this.base.config.highlightHaloOpacity) {
+                this.view.highlightOptions.haloOpacity = this.base.config.highlightHaloOpacity;
+              }
+              // Disable map scroll and add overlay explaining how to do it depending on touch device or not
+              if (this.base.config.disableScroll) {
+                const scrollMessage = document.getElementById(
+                  "scrollMessage"
+                ) as HTMLDivElement;
+                scrollMessage.innerHTML = i18n.scroll.instructions;
 
-            if (this.base.config.viewMaxScale) {
-              this.view.constraints.maxScale = this.base.config.viewMaxScale;
-            }
-            if (this.base.config.highlightColor) {
-              this.view.highlightOptions.color = this.base.config
-                .highlightColor as any;
-            }
-            if (this.base.config.highlightFillOpacity) {
-              this.view.highlightOptions.fillOpacity = this.base.config.highlightFillOpacity;
-            }
-            if (this.base.config.highlightHaloOpacity) {
-              this.view.highlightOptions.haloOpacity = this.base.config.highlightHaloOpacity;
-            }
-            // Disable map scroll and add overlay explaining how to do it depending on touch device or not
-            if (this.base.config.disableScroll) {
-              const scrollMessage = document.getElementById(
-                "scrollMessage"
-              ) as HTMLDivElement;
-              scrollMessage.innerHTML = i18n.scroll.instructions;
+                const eventType =
+                  "ontouchstart" in document.documentElement
+                    ? "drag"
+                    : "mouse-wheel";
+                this.view.on(eventType, e => {
+                  this.handleScroll(e);
+                });
+              }
 
-              const eventType =
-                "ontouchstart" in document.documentElement
-                  ? "drag"
-                  : "mouse-wheel";
-              this.view.on(eventType, e => {
-                this.handleScroll(e);
-              });
-            }
+              this.addDetails(item);
+              this.applySharedTheme();
+              this.addWidgets();
+            })
 
-            this.addDetails(item);
-            this.applySharedTheme();
-            this.addWidgets();
           })
-          .then(() =>
-            findQuery(find, this.view).then(() => goToMarker(marker, this.view))
-          )
+
       );
     });
     document.body.classList.remove(CSS.loading);
@@ -265,7 +262,6 @@ class MapExample {
         group: this.base.config.detailsPosition,
         expandTooltip: i18n.widgets.details.label
       });
-      const index = this.base.config.detailsIndex === "first" ? 0 : 4;
       let isSmall = this.view.widthBreakpoint === "xsmall" || this.view.widthBreakpoint === "small" || this.view.widthBreakpoint === "medium";
 
       const panelComponent: __esri.UIAddComponent = {
@@ -290,8 +286,20 @@ class MapExample {
   }
 
   public async addWidgets() {
-    if (this.base.config.bookmarks) {
+    if (this.base.config.locate) {
+      const locateRequire = await requireUtils.when(require, [
+        "esri/widgets/Locate"
+      ]);
+      const Locate = locateRequire[0];
 
+      const locateWidget = new Locate({
+        view: this.view
+      });
+      this.view.ui.add(locateWidget, this.base.config.locatePosition);
+
+    }
+
+    if (this.base.config.bookmarks) {
       const webmap = this.view.map as __esri.WebMap;
       const bookmarks = webmap.bookmarks;
       if (bookmarks && bookmarks.length && bookmarks.length > 0) {
@@ -307,15 +315,15 @@ class MapExample {
         const bookmarkExpand = new Expand({
           view: this.view,
           content: bookmarkWidget,
-          group: this.base.config.bookmarksPosition//,
-          // expandTooltip: Bookmarks//i18n.widgets.bookmark.label
+          group: this.base.config.bookmarksPosition,
+          expandTooltip: i18n.widgets.bookmark.label
         });
 
         this.view.ui.add(bookmarkExpand, this.base.config.bookmarksPosition);
       }
     }
 
-    if (this.base.config.inset) {
+    if (this.base.config.insetMap || this.base.config.inset) {
       this.createOverviewMap();
     }
     if (this.base.config.fullscreen) {
@@ -327,6 +335,41 @@ class MapExample {
         view: this.view
       });
       this.view.ui.add(full, this.base.config.fullscreenPosition);
+    }
+    if (this.base.config.print) {
+      const printRequire = await requireUtils.when(require, [
+        "esri/widgets/Print"
+      ]);
+      const Print = printRequire[0];
+      const printWidget = new Print({
+        view: this.view,
+        printServiceUrl: this.base.portal.helperServices.printTask.url
+      });
+      const printExpand = new Expand({
+        view: this.view,
+        group: this.base.config.printPosition,
+        expandTooltip: printWidget.label,
+        content: printWidget
+      });
+
+      this.view.ui.add(printExpand, this.base.config.printPosition);
+    }
+    if (this.base.config.share) {
+      const shareRequire = await requireUtils.when(require, [
+        "Application/Share/ShareWidget", "Application/Share/Share/ShareFeatures"
+      ]);
+      const Share = shareRequire[0];
+      const ShareFeatures = shareRequire[1];
+      const shareWidget = new Share({
+        view: this.view,
+        container: document.createElement('div'),
+        shareFeatures: new ShareFeatures({
+          embedMap: this.base.config.shareIncludeEmbed,
+          shareServices: this.base.config.shareIncludeServices,
+          copyToClipboard: this.base.config.shareIncludeCopy
+        })
+      });
+      this.view.ui.add(shareWidget, this.base.config.sharePosition);
     }
     if (this.base.config.home) {
       const homeRequire = await requireUtils.when(require, [
@@ -420,9 +463,9 @@ class MapExample {
       if (this.base.config.insetScale) {
         goToParams.scale = this.base.config.insetScale;
       } else {
-        insetView.graphics.add(graphic);
         goToParams.zoom = this.view.zoom > 4 ? this.view.zoom - 4 : 0;
       }
+      insetView.graphics.add(graphic);
       insetView.goTo(goToParams);
     }
 
@@ -447,13 +490,17 @@ class MapExample {
       },
       container: insetDiv
     });
-    this.view.ui.add(insetDiv, this.base.config.insetPosition);
+
+    this.view.ui.add(insetView.container, this.base.config.insetPosition);
     await insetView.when();
 
     this.view.watch("extent", () => {
       this.createGraphic(insetView);
     });
     this.createGraphic(insetView);
+
+    insetView.container.classList.add(this.base.config.insetStyle);
+
     // prevent panning
     insetView.on("drag", evt => {
       evt.stopPropagation();

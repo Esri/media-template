@@ -6,6 +6,9 @@ define({
       instructions: "Press + and - keys  or use zoom controls to zoom in and out"
     },
     widgets: {
+      bookmark: {
+        label: "Bookmarks"
+      },
       overview: "Inset Map",
       details: {
         label: "Info"
