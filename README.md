@@ -36,6 +36,7 @@ Use Media Map to present content from a map and configure it using the following
 2. Web-enable the directory.
 3. Access the .html page to test. 
 4. Install node and npm then run npm install via the command line. 
+5. Run npm start to generate js and css files from sass and typescript.
 5. Start customizing the app code.
 
 [New to Github? Get started here.](https://github.com/)
