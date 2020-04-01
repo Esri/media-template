@@ -41,14 +41,17 @@
     "home",
     "mapZoom",
     "basemapToggle",
+    "viewMinScale",
+    "viewMaxScale",
     "sharingUrl",
     "details",
     "search",
     "share",
+    "time",
     "splash"
   ],
   "webMap": {
-    "default": "1970c1995b8f44749f4b9b6e81b5ba45",
+    "default": "fb59c4b282a9408d9547b1648b518a11",
     "fetch": true
   },
   "webScene": {

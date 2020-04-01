@@ -20,18 +20,14 @@
   limitations under the License.​
 */
 
-import Camera = require("esri/Camera");
-import Graphic = require("esri/Graphic");
+import Camera from "esri/Camera";
 
-import promiseUtils = require("esri/core/promiseUtils");
-import requireUtils = require("esri/core/requireUtils");
+import { reject } from "esri/core/promiseUtils";
 
-import Extent = require("esri/geometry/Extent");
-import Point = require("esri/geometry/Point");
-
-import MapView = require("esri/views/MapView");
-import SceneView = require("esri/views/SceneView");
-
+import Extent from "esri/geometry/Extent";
+import Point from "esri/geometry/Point";
+import { PictureMarkerSymbol, SimpleMarkerSymbol } from "esri/symbols";
+import esri = __esri;
 interface CameraProperties {
   heading?: number;
   position?: Point;
@@ -63,7 +59,10 @@ export function parseViewpoint(viewpoint: string): Camera {
   const tiltAndHeadingIndex = cameraIndex === 0 ? 1 : 0;
   const cameraString = viewpointArray[cameraIndex];
   const tiltAndHeadingString = viewpointArray[tiltAndHeadingIndex];
-  const cameraProperties = _getCameraProperties(cameraString, tiltAndHeadingString);
+  const cameraProperties = _getCameraProperties(
+    cameraString,
+    tiltAndHeadingString
+  );
 
   if (cameraProperties.position) {
     return new Camera(cameraProperties);
@@ -97,10 +96,10 @@ export function parseCenter(center: string): Point {
 
   const wkid = centerLength === 3 ? parseInt(centerArray[2], 10) : 4326;
   return new Point({
-    x: x,
-    y: y,
+    x,
+    y,
     spatialReference: {
-      wkid: wkid
+      wkid
     }
   });
 }
@@ -136,18 +135,18 @@ export function parseExtent(extent: string): Extent {
 
   const wkid = extentLength === 5 ? parseInt(extentArray[4], 10) : 4326;
   const ext = new Extent({
-    xmin: xmin,
-    ymin: ymin,
-    xmax: xmax,
-    ymax: ymax,
+    xmin,
+    ymin,
+    xmax,
+    ymax,
     spatialReference: {
-      wkid: wkid
+      wkid
     }
   });
   return ext;
 }
 
-export function parseMarker(marker: string): IPromise<Graphic> {
+export async function parseMarker(marker: string, colorTheme?: string): Promise<esri.Graphic | {}> {
   // ?marker=-117;34;4326;My Title;http://www.daisysacres.com/images/daisy_icon.gif;My location&level=10
   // ?marker=-117,34,4326,My Title,http://www.daisysacres.com/images/daisy_icon.gif,My location&level=10
   // ?marker=-13044705.25,4036227.41,102100,My Title,http://www.daisysacres.com/images/daisy_icon.gif,My location&level=10
@@ -157,65 +156,68 @@ export function parseMarker(marker: string): IPromise<Graphic> {
   // ?marker=10406557.402,6590748.134,2526
 
   if (!marker) {
-    return promiseUtils.resolve();
+    return reject();
   }
 
   const markerArray = _splitURLString(marker);
   const markerLength = markerArray.length;
 
   if (markerLength < 2) {
-    return promiseUtils.reject();
+    return reject();
   }
 
-  return requireUtils.when(require, [
-    "esri/Graphic",
-    "esri/PopupTemplate",
-    "esri/symbols/PictureMarkerSymbol",
-    "esri/symbols/SimpleMarkerSymbol"
-  ]).then(modules => {
-    const [Graphic, PopupTemplate, PictureMarkerSymbol, SimpleMarkerSymbol] = modules;
 
-    const x = parseFloat(markerArray[0]);
-    const y = parseFloat(markerArray[1]);
-    const content = markerArray[3];
-    const icon_url = markerArray[4];
-    const label = markerArray[5];
-    const wkid = markerArray[2] ? parseInt(markerArray[2], 10) : 4326;
+  const [Graphic, PopupTemplate, PictureMarkerSymbol, SimpleMarkerSymbol] = await Promise.all([
+    import("esri/Graphic"),
+    import("esri/PopupTemplate"),
+    import("esri/symbols/PictureMarkerSymbol"),
+    import("esri/symbols/SimpleMarkerSymbol")
+  ]);
 
-    const markerSymbol = icon_url ? new PictureMarkerSymbol({
+
+  const x = parseFloat(markerArray[0]);
+  const y = parseFloat(markerArray[1]);
+  const content = markerArray[3];
+  const icon_url = markerArray[4];
+  const label = markerArray[5];
+  const wkid = markerArray[2] ? parseInt(markerArray[2], 10) : 4326;
+  const color = (colorTheme && colorTheme === "light") ? [0, 0, 0, 0, 1] : [255, 255, 255, .25]
+  const markerSymbol = icon_url
+    ? new PictureMarkerSymbol.default({
       url: icon_url,
       height: "32px",
       width: "32px"
-    }) : new SimpleMarkerSymbol({
+    }) as PictureMarkerSymbol
+    : new SimpleMarkerSymbol.default({
       outline: {
         width: 1
       },
       size: 14,
-      color: [255, 255, 255, 0]
-    });
+      color
+    }) as SimpleMarkerSymbol;
 
-    const point = new Point({
-      "x": x,
-      "y": y,
-      "spatialReference": {
-        "wkid": wkid
-      }
-    });
-
-    const hasPopupDetails = content || label;
-    const popupTemplate = hasPopupDetails ?
-      new PopupTemplate({
-        "title": content || null,
-        "content": label || null
-      }) : null;
-
-    const graphic = new Graphic({
-      geometry: point,
-      symbol: markerSymbol,
-      popupTemplate: popupTemplate
-    });
-    return graphic;
+  const point = new Point({
+    x,
+    y,
+    spatialReference: {
+      wkid
+    }
   });
+
+  const hasPopupDetails = content || label;
+  const popupTemplate = hasPopupDetails
+    ? new PopupTemplate.default({
+      title: content || null,
+      content: label || null
+    }) as esri.PopupTemplate
+    : null;
+
+  const graphic = new Graphic.default({
+    geometry: point,
+    symbol: markerSymbol,
+    popupTemplate: popupTemplate
+  });
+  return graphic as esri.Graphic;
 }
 
 //--------------------------------------------------------------------------
@@ -249,13 +251,14 @@ function _getCameraPosition(camera: string): Point {
   const x = parseFloat(positionArray[0]),
     y = parseFloat(positionArray[1]),
     z = parseFloat(positionArray[2]);
-  const wkid = positionArray.length === 4 ? parseInt(positionArray[3], 10) : 4326;
+  const wkid =
+    positionArray.length === 4 ? parseInt(positionArray[3], 10) : 4326;
   return new Point({
-    x: x,
-    y: y,
-    z: z,
+    x,
+    y,
+    z,
     spatialReference: {
-      wkid: wkid
+      wkid
     }
   });
 }
@@ -267,13 +270,18 @@ function _getHeadingAndTilt(headingAndTilt: string): CameraProperties {
 
   const tiltHeadingArray = headingAndTilt.split(",");
 
-  return tiltHeadingArray.length >= 0 ? {
-    heading: parseFloat(tiltHeadingArray[0]),
-    tilt: parseFloat(tiltHeadingArray[1])
-  } : null;
+  return tiltHeadingArray.length >= 0
+    ? {
+      heading: parseFloat(tiltHeadingArray[0]),
+      tilt: parseFloat(tiltHeadingArray[1])
+    }
+    : null;
 }
 
-function _getCameraProperties(camera: string, headingAndTilt: string): CameraProperties {
+function _getCameraProperties(
+  camera: string,
+  headingAndTilt: string
+): CameraProperties {
   const cameraPosition = _getCameraPosition(camera);
   const headingAndTiltProperties = _getHeadingAndTilt(headingAndTilt);
 

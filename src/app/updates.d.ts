@@ -8,17 +8,4 @@ declare namespace __esri {
         formatter: string;
     };
 
-    type SubstituteOptions = {
-        first?: boolean;
-        dateFormat?: DateFormat;
-        numberFormat?: string;
-    };
-    interface lang {
-        substitute(
-            data: HashMap<any>,
-            template: string,
-            options?: SubstituteOptions | BackwardsCompatibleFirst
-        ): string;
-    }
-
 }

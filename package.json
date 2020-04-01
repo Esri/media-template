@@ -10,13 +10,15 @@
   ],
   "dependencies": {
     "@esri/application-base-js": "0.0.2",
+    "moment": "^2.24.0",
     "node-sass": "^4.9.3",
-    "npm": "^6.2.0",
-    "npm-run-all": "^4.1.2"
+    "npm": "^6.13.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.7.4"
   },
   "devDependencies": {
     "calcite-web": "github:Esri/calcite-web#v1.0.1",
-    "@types/arcgis-js-api": "^4.7.0",
+    "@types/arcgis-js-api": "^4.12.0",
     "cpx": "^1.5.0",
     "dojo-typings": "^1.11.9"
   },
@@ -25,7 +27,7 @@
     "start": "npm-run-all --parallel watch:sass watch:ts",
     "watch:ts": "tsc --watch",
     "watch:sass": "./node_modules/.bin/node-sass --watch ./src/styles -o ./dist/styles",
-    "share:sass": "node-sass --watch ./src/app/Share/css -o ./dist/app/Share/css"
+    "share:sass": "node-sass --watch ./src/app/Components/Share/css -o ./dist/app/Components/Share/css"
   },
   "author": "",
   "license": "ISC"

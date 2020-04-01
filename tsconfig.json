@@ -2,6 +2,7 @@
   "compilerOptions": {
     "lib": [
       "es5",
+      "es2015",
       "es2015.promise",
       "dom",
       "scripthost"
@@ -12,13 +13,18 @@
     "jsx": "react",
     "jsxFactory": "tsx",
     "target": "es5",
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist/app"
+    "outDir": "dist/app",
+    "types": [
+      "arcgis-js-api"
+    ]
   },
   "include": [
-    "./**/*"
+    "./**/*",
+    "./src/app/application-base-js/**/*"
   ],
   "files": [
     "node_modules/dojo-typings/dojo/1.11/loader.d.ts",

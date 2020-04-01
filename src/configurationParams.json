@@ -1,526 +1,1059 @@
 {
-    "configurationSettings": [{
-        "category": "General",
-        "fields": [{
-                "type": "webmap",
-                "conditions": ["4x"]
-            }, {
-                "type": "appproxies"
-            }, {
-                "type": "subcategory",
-                "label": "Map Navigation Options"
-            }, {
-                "type": "conditional",
-                "fieldName": "mapZoom",
-                "condition": false,
-                "label": "Map zoom controls",
-                "items": [{
-                    "type": "options",
-                    "fieldName": "mapZoomPosition",
-                    "label": "Zoom control location",
-                    "tooltip": "Select location for zoom controls",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }]
-            }, {
-                "type": "conditional",
-                "fieldName": "locate",
-                "condition": false,
-                "label": "Find current location",
-                "tooltip": "Requires secure origin (https)",
-                "items": [{
-                    "type": "options",
-                    "fieldName": "locatePosition",
-                    "label": "Locate control location",
-                    "tooltip": "Select location for location control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }]
-            }, {
-                "type": "paragraph",
-                "value": "If you are embedding this app into another page you might want to prevent map scroll"
-            }, {
+  "configurationSettings": [{
+      "category": "General",
+      "fields": [{
+          "type": "itembrowser",
+          "fieldName": "webmap",
+          "conditions": [
+            "4x"
+          ],
+          "label": "Select",
+          "itemTypes": [
+            "Web Map",
+            "Web Scene"
+          ],
+          "defaultContent": true,
+          "showOnLoad": true
+        },
+        {
+          "type": "appproxies"
+        },
+        {
+          "type": "subcategory",
+          "label": "Map navigation options"
+        },
+        {
+          "type": "boolean",
+          "fieldName": "rotation",
+          "label": " Enable 2d map rotation"
+        },
+        {
+          "type": "conditional",
+          "fieldName": "mapZoom",
+          "condition": false,
+          "label": "Map zoom controls",
+          "items": [{
+            "type": "options",
+            "fieldName": "mapZoomPosition",
+            "label": "Zoom control location",
+            "tooltip": "Select location for zoom controls",
+            "options": [{
+                "label": "Top right",
+                "value": "top-right"
+              },
+              {
+                "label": "Top left",
+                "value": "top-left"
+              },
+              {
+                "label": "Bottom right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "Bottom left",
+                "value": "bottom-left"
+              }
+            ]
+          }]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "locate",
+          "condition": false,
+          "label": "Find current location",
+          "tooltip": "Requires secure origin (https)",
+          "items": [{
+            "type": "options",
+            "fieldName": "locatePosition",
+            "label": "Locate control location",
+            "tooltip": "Select location for location control",
+            "options": [{
+                "label": "Top right",
+                "value": "top-right"
+              },
+              {
+                "label": "Top left",
+                "value": "top-left"
+              },
+              {
+                "label": "Bottom right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "Bottom left",
+                "value": "bottom-left"
+              }
+            ]
+          }]
+        },
+        {
+          "type": "paragraph",
+          "value": "If you are embedding this app into another page you might want to prevent map scroll."
+        },
+        {
+          "type": "boolean",
+          "fieldName": "disableScroll",
+          "label": "Prevent map scroll"
+        },
+        {
+          "type": "paragraph",
+          "value": "Determine how the pop-up is displayed — either floating or docked to one of the app corners."
+        },
+        {
+          "type": "options",
+          "fieldName": "popupDockPosition",
+          "label": "Fixed pop-up content location",
+          "tooltip": "Select location for pop-up content",
+          "options": [{
+              "label": "auto",
+              "value": "auto"
+            },
+            {
+              "label": "Top right",
+              "value": "top-right"
+            },
+            {
+              "label": "Top left",
+              "value": "top-left"
+            },
+            {
+              "label": "Top center",
+              "value": "top-center"
+            },
+            {
+              "label": "Bottom right",
+              "value": "bottom-right"
+            },
+            {
+              "label": "Bottom left",
+              "value": "bottom-left"
+            },
+            {
+              "label": "Bottom center",
+              "value": "bottom-center"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Choose how image attachments will display in pop-ups."
+        },
+        {
+          "type": "options",
+          "fieldName": "popupDisplayAttachmentType",
+          "label": "Pop-up attachments can be viewed in list or gallery mode.",
+          "options": [{
+              "label": "Gallery",
+              "value": "preview"
+            },
+            {
+              "label": "List",
+              "value": "list"
+            }
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "hoverPopup",
+          "condition": false,
+          "label": "Enable hover pop-ups",
+          "tooltip": "Show pop-up content on hover",
+          "items": [{
+              "type": "options",
+              "fieldName": "hoverPopupType",
+              "label": "Select hover pop-up type",
+              "options": [{
+                  "label": "Fixed",
+                  "value": "fixed"
+                },
+                {
+                  "label": "Floating",
+                  "value": "floating"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "value": "Choose the location where the pop-up willl appear when the fixed option is selected."
+            },
+            {
+              "type": "options",
+              "fieldName": "hoverPopupPosition",
+              "label": "Fixed pop-up content location",
+              "tooltip": "Select location for pop-up content",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "details",
+          "tooltip": "Add info panel",
+          "label": "Info panel",
+          "condition": false,
+          "items": [{
+              "type": "string",
+              "fieldName": "detailsTitle",
+              "label": "Title",
+              "tooltip": "Detail panel title"
+            },
+            {
+              "type": "string",
+              "fieldName": "detailsContent",
+              "label": "Content",
+              "tooltip": "Details panel content",
+              "stringFieldOption": "richtext"
+            },
+            {
+              "type": "options",
+              "fieldName": "detailsPosition",
+              "label": "Detail panel location",
+              "tooltip": "Select location for panel",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "conditional",
+              "condition": false,
+              "fieldName": "showPanelTheme",
+              "label": "Optional color theme",
+              "items": [{
+                  "type": "paragraph",
+                  "value": "By default the panel will have an off white background with dark gray text. If your organization has a shared theme the theme's background and text color will be used. Use the options below if you want to modify the pre-defined values."
+                },
+                {
+                  "type": "color",
+                  "label": "Panel background color",
+                  "fieldName": "detailsBackgroundColor"
+                },
+                {
+                  "type": "color",
+                  "label": "Panel text color",
+                  "fieldName": "detailsTextColor"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "splash",
+          "tooltip": "Add splash screen",
+          "label": "Splash screen",
+          "condition": false,
+          "items": [{
+              "type": "string",
+              "fieldName": "splashTitle",
+              "label": "Title",
+              "tooltip": "Splash screen title"
+            },
+            {
+              "type": "string",
+              "fieldName": "splashContent",
+              "label": "Content",
+              "tooltip": "Splash screen content",
+              "stringFieldOption": "richtext"
+            },
+            {
+              "type": "string",
+              "fieldName": "splashButtonText",
+              "label": "Button label",
+              "tooltip": "Define label for the accept button"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Use the Custom css option to add css that overwrites rules in the app."
+        },
+        {
+          "type": "string",
+          "fieldName": "customstyle",
+          "tooltip": "Custom css",
+          "label": "Custom css"
+        }
+      ]
+    },
+    {
+      "category": "Options",
+      "fields": [{
+          "type": "conditional",
+          "fieldName": "home",
+          "label": "Home extent",
+          "condition": false,
+          "items": [{
+            "type": "options",
+            "fieldName": "homePosition",
+            "label": "Home location",
+            "tooltip": "Select location for home control",
+            "options": [{
+                "label": "Top right",
+                "value": "top-right"
+              },
+              {
+                "label": "Top left",
+                "value": "top-left"
+              },
+              {
+                "label": "Bottom right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "Bottom left",
+                "value": "bottom-left"
+              }
+            ]
+          }]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "share",
+          "label": "Social sharing",
+          "condition": false,
+          "items": [{
+              "type": "options",
+              "fieldName": "sharePosition",
+              "label": "Share location",
+              "tooltip": "Select location for share control",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "boolean",
+              "fieldName": "shareIncludeEmbed",
+              "label": "Include embed sharing option"
+            },
+            {
+              "type": "boolean",
+              "fieldName": "shareIncludeServices",
+              "label": "Include social media options"
+            },
+            {
+              "type": "boolean",
+              "fieldName": "shareIncludeCopy",
+              "label": "Include copy URL option"
+            }
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "print",
+          "label": "Print",
+          "condition": false,
+          "items": [{
+            "type": "options",
+            "fieldName": "printPosition",
+            "label": "Print location",
+            "tooltip": "Select location for print control",
+            "options": [{
+                "label": "Top right",
+                "value": "top-right"
+              },
+              {
+                "label": "Top left",
+                "value": "top-left"
+              },
+              {
+                "label": "Bottom right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "Bottom left",
+                "value": "bottom-left"
+              }
+            ]
+          }]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "layerList",
+          "label": "Layer list",
+          "condition": false,
+          "items": [{
+              "type": "options",
+              "fieldName": "layerListPosition",
+              "label": "Layer list  location",
+              "tooltip": "Select location for layer list",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "conditional",
+              "fieldName": "layerListAddLegend",
+              "label": "Add legend to layer list",
+              "condition": false,
+              "items": [{
                 "type": "boolean",
-                "fieldName": "disableScroll",
-                "label": "Prevent map scroll"
+                "fieldName": "layerListShowLegendOnLoad",
+                "label": "Show legend as open when loaded"
+              }]
             },
             {
-                "type": "conditional",
-                "fieldName": "details",
-                "tooltip": "Add info panel",
-                "label": "Info panel",
-                "condition": false,
-                "items": [{
-                    "type": "string",
-                    "fieldName": "detailsTitle",
-                    "label": "Title",
-                    "tooltip": "Detail panel title"
-                }, {
-                    "type": "string",
-                    "fieldName": "detailsContent",
-                    "label": "Content",
-                    "tooltip": "Details panel content",
-                    "stringFieldOption": "richtext"
-                }, {
-                    "type": "options",
-                    "fieldName": "detailsPosition",
-                    "label": "Detail panel location",
-                    "tooltip": "Select location for panel",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }, {
-                    "type": "conditional",
-                    "condition": false,
-                    "fieldName": "showPanelTheme",
-                    "label": "Optional color theme",
-                    "items": [{
-                        "type": "paragraph",
-                        "value": "By default the panel will have an off white background with dark gray text. If your organization has a shared theme the theme's background and text color will be used. Use the options below if you want to modify the pre-defined values."
-                    }, {
-                        "type": "color",
-                        "label": "Panel background color",
-                        "fieldName": "detailsBackgroundColor"
-                    }, {
-                        "type": "color",
-                        "label": "Panel text color",
-                        "fieldName": "detailsTextColor"
-                    }]
-                }]
-            }, {
-                "type": "conditional",
-                "fieldName": "splash",
-                "tooltip": "Add splash screen",
-                "label": "Splash screen",
-                "condition": false,
-                "items": [{
-                    "type": "string",
-                    "fieldName": "splashTitle",
-                    "label": "Title",
-                    "tooltip": "Splash screen title"
-                }, {
-                    "type": "string",
-                    "fieldName": "splashContent",
-                    "label": "Content",
-                    "tooltip": "Splash screen content",
-                    "stringFieldOption": "richtext"
-                }, {
-                    "type": "string",
-                    "fieldName": "splashButtonText",
-                    "label": "Button label",
-                    "tooltip": "Define label for the accept button"
-                }]
-            }, {
-                "type": "paragraph",
-                "value": "Use the Custom css option to add css that overwrites rules in the app."
-            }, {
-                "type": "string",
-                "fieldName": "customstyle",
-                "tooltip": "Custom css",
-                "label": "Custom css"
+              "type": "boolean",
+              "fieldName": "layerListOpenAtStart",
+              "label": "Layer list open at start"
             }
-        ]
-    }, {
-        "category": "Options",
-        "fields": [{
-                "type": "conditional",
-                "fieldName": "home",
-                "label": "Home extent",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "homePosition",
-                    "label": "Home location",
-                    "tooltip": "Select location for home control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }]
-            }, {
-                "type": "conditional",
-                "fieldName": "share",
-                "label": "Social Sharing",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "sharePosition",
-                    "label": "Share location",
-                    "tooltip": "Select location for share control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }, {
-                    "type": "boolean",
-                    "fieldName": "shareIncludeEmbed",
-                    "label": "Include embed sharing option"
-                }, {
-                    "type": "boolean",
-                    "fieldName": "shareIncludeServices",
-                    "label": "Include social media options"
-                }, {
-                    "type": "boolean",
-                    "fieldName": "shareIncludeCopy",
-                    "label": "Include copy url option"
-                }]
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "legend",
+          "label": "Legend",
+          "condition": false,
+          "items": [{
+              "type": "options",
+              "fieldName": "legendPosition",
+              "label": "Legend location",
+              "tooltip": "Select location for legend",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
             },
             {
-                "type": "conditional",
-                "fieldName": "print",
-                "label": "Print",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "printPosition",
-                    "label": "Print location",
-                    "tooltip": "Select location for print control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }]
-
+              "type": "boolean",
+              "fieldName": "legendOpenAtStart",
+              "label": "Legend open at start"
             },
             {
-                "type": "conditional",
-                "fieldName": "legend",
-                "label": "Legend",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "legendPosition",
-                    "label": "Legend location",
-                    "tooltip": "Select location for legend",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }, {
-                    "type": "boolean",
-                    "fieldName": "legendOpenAtStart",
-                    "label": "Legend open at start"
-                }, {
-                    "type": "paragraph",
-                    "value": "Display the legend using the default style or the card style. The card style is a responsive style that displays the legend with a horizontal layout in large views and a compact card layout in small views."
-                }, {
-                    "type": "options",
-                    "fieldName": "legendStyle",
-                    "label": "Legend style",
-                    "options": [{
-                        "label": "Default",
-                        "value": "default"
-                    }, {
-                        "label": "Card",
-                        "value": "card"
-                    }]
-                }]
-
-            }, {
-                "type": "conditional",
-                "fieldName": "fullscreen",
-                "label": "Fullscreen",
-                "condition": false,
-                "items": [{
-                    "type": "paragraph",
-                    "value": "Note: Fullscreen does not display the app full screen if the app is embedded into another page using an iframe."
-                }, {
-                    "type": "options",
-                    "fieldName": "fullscreenPosition",
-                    "label": "Fullscreen location",
-                    "tooltip": "Select location for fullscreen control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }]
-
-            }, {
-                "type": "conditional",
-                "fieldName": "search",
-                "label": "Search",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "searchPosition",
-                    "label": "Search location",
-                    "tooltip": "Select location for search control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }, {
-                    "type": "boolean",
-                    "fieldName": "searchOpenAtStart",
-                    "label": "Search open at start"
-                }]
-            }, {
-                "type": "conditional",
-                "fieldName": "bookmarks",
-                "label": "Bookmarks",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "bookmarksPosition",
-                    "label": "Bookmark location",
-                    "tooltip": "Select location for bookmark control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }]
-            }, {
-                "type": "conditional",
-                "fieldName": "basemapToggle",
-                "label": "Basemap Toggle",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "basemapTogglePosition",
-                    "label": "Bookmark location",
-                    "tooltip": "Select location for basemap toggle control",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }, {
-                    "type": "basemaps",
-                    "fieldName": "basemapToggleAltBasemap",
-                    "label": "Alternate basemap for toggle"
-                }]
-            }, {
-                "type": "color",
-                "fieldName": "highlightColor",
-                "label": "Selection color"
-            }, {
-                "type": "conditional",
-                "fieldName": "insetMap",
-                "label": "Inset map",
-                "condition": false,
-                "items": [{
-                    "type": "options",
-                    "fieldName": "insetPosition",
-                    "label": "Inset map location",
-                    "tooltip": "Select location for inset map",
-                    "options": [{
-                            "label": "Top right",
-                            "value": "top-right"
-                        }, {
-                            "label": "Top left",
-                            "value": "top-left"
-                        },
-                        {
-                            "label": "Bottom right",
-                            "value": "bottom-right"
-                        },
-                        {
-                            "label": "Bottom left",
-                            "value": "bottom-left"
-                        }
-                    ]
-                }, {
-                    "type": "scaleList",
-                    "fieldName": "insetScale",
-                    "label": "Scale for inset map"
-                }, {
-                    "type": "paragraph",
-                    "value": "By default the inset map will use the same base map as the map map. If you'd like to use a different base map select it from the list below."
-                }, {
-                    "type": "basemaps",
-                    "fieldName": "insetBasemap",
-                    "label": "Basemap for inset map"
-                }, {
-                    "type": "radio",
-                    "fieldName": "insetStyle",
-                    "label": "Inset Map Style",
-                    "items": [{
-                        "label": "Round",
-                        "value": "round",
-                        "checked": true
-                    }, {
-                        "label": "Square",
-                        "value": "square"
-                    }]
-                }]
+              "type": "paragraph",
+              "value": "Display the legend using the default style or the card style. The card style is a responsive style that displays the legend with a horizontal layout in large views and a compact card layout in small views."
+            },
+            {
+              "type": "options",
+              "fieldName": "legendStyle",
+              "label": "Legend style",
+              "options": [{
+                  "label": "Default",
+                  "value": "default"
+                },
+                {
+                  "label": "Card",
+                  "value": "card"
+                }
+              ]
             }
-        ]
-    }],
-    "values": {
-        "showPanelTheme": false,
-        "zoomLevels": false,
-        "mapZoom": false,
-        "mapZoomPosition": "top-left",
-        "home": false,
-        "homePosition": "top-left",
-        "disableScroll": false,
-        "legend": false,
-        "legendPosition": "top-left",
-        "legendOpenAtStart": false,
-        "legendStyle": "default",
-        "fullscreen": false,
-        "fullscreenPosition": "top-right",
-        "insetMap": false,
-        "insetPosition": "bottom-left",
-        "search": false,
-        "searchPosition": "top-right",
-        "searchOpenAtStart": true,
-        "share": false,
-        "sharePosition": "top-right",
-        "shareIncludeEmbed": false,
-        "shareIncludeServices": true,
-        "shareIncludeCopy": true,
-        "locate": false,
-        "locatePosition": "top-left",
-        "bookmarks": false,
-        "bookmarksPosition": "top-right",
-        "basemapToggle": false,
-        "basemapTogglePosition": "bottom-left",
-        "basemapToggleAltBasemap": "satellite",
-        "print": false,
-        "printPosition": "top-right",
-        "details": false,
-        "detailsPosition": "bottom-right",
-        "splash": false,
-        "highlightColor": "#00FFFF",
-        "detailsBackgroundColor": "#fff",
-        "detailsTextColor": "#333",
-        "hideBasemap": false
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "fullscreen",
+          "label": "Fullscreen",
+          "condition": false,
+          "items": [{
+              "type": "paragraph",
+              "value": "Note: Fullscreen does not display the app full screen if the app is embedded into another page using an iframe."
+            },
+            {
+              "type": "options",
+              "fieldName": "fullscreenPosition",
+              "label": "Fullscreen location",
+              "tooltip": "Select location for fullscreen control",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "bookmarks",
+          "label": "Bookmarks",
+          "condition": false,
+          "items": [{
+            "type": "options",
+            "fieldName": "bookmarksPosition",
+            "label": "Bookmark location",
+            "tooltip": "Select location for bookmark control",
+            "options": [{
+                "label": "Top right",
+                "value": "top-right"
+              },
+              {
+                "label": "Top left",
+                "value": "top-left"
+              },
+              {
+                "label": "Bottom right",
+                "value": "bottom-right"
+              },
+              {
+                "label": "Bottom left",
+                "value": "bottom-left"
+              }
+            ]
+          }]
+        },
+        {
+          "type": "conditional",
+          "fieldName": "basemapToggle",
+          "label": "Basemap toggle",
+          "condition": false,
+          "items": [{
+              "type": "options",
+              "fieldName": "basemapTogglePosition",
+              "label": "Basemap toggle location",
+              "tooltip": "Select location for basemap toggle control",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "orgBasemaps",
+              "fieldName": "basemapToggleAltBasemap",
+              "label": "Alternate basemap for toggle"
+            }
+          ]
+        }, {
+          "type": "conditional",
+          "fieldName": "swipe",
+          "label": "Display swipe tool",
+          "condition": false,
+          "items": [{
+            "label": "Select left or top layer(s)",
+            "fieldName": "leadingLayers",
+            "type": "multilayerandfieldselector",
+            "layerOptions": {
+              "supportedTypes": ["FeatureLayer",
+                "ArcGISTiledMapServiceLayer", "VectorTileLayer", "ImageServiceLayer"
+              ]
+            }
+          }, {
+            "label": "Select right or bottom layer(s)",
+            "fieldName": "trailingLayers",
+            "type": "multilayerandfieldselector",
+            "layerOptions": {
+              "supportedTypes": ["FeatureLayer",
+                "ArcGISTiledMapServiceLayer", "VectorTileLayer", "ImageServiceLayer"
+              ]
+            }
+          }, {
+            "mode": "Swipe mode",
+            "fieldName": "mode",
+            "type": "options",
+            "options": [{
+              "label": "Horizontal",
+              "value": "horizontal"
+            }, {
+              "label": "Veritcal",
+              "value": "vertical"
+            }]
+          }, {
+            "label": "Always display swipe tool",
+            "fieldName": "swipeAlwaysEnabled",
+            "type": "conditional",
+            "condition": true,
+            "items": [{
+              "label": "Select location of button that enables swipe",
+              "fieldName": "swipeButtonPosition",
+              "type": "options",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            }]
+          }]
+        },
+        {
+          "type": "paragraph",
+          "value": "If your web map contains time-enabled layers you can add a time slider (optional)."
+        },
+        {
+          "type": "conditional",
+          "fieldName": "time",
+          "label": "Time",
+          "condition": false,
+          "items": [{
+              "type": "options",
+              "fieldName": "timePosition",
+              "label": "Time location",
+              "tooltip": "Select location for time slider",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "boolean",
+              "fieldName": "timeExpandAtStart",
+              "label": "Open time panel at start"
+            },
+            {
+              "type": "boolean",
+              "fieldName": "hideSliderBar",
+              "label": "Hide time slider bar"
+            },
+            {
+              "type": "boolean",
+              "fieldName": "timeLoop",
+              "label": "Play time animation in a loop"
+            },
+            {
+              "type": "boolean",
+              "fieldName": "timeVisible",
+              "label": "Include time in the display"
+            },
+            {
+              "type": "conditional",
+              "fieldName": "timeEffect",
+              "label": "Apply an effect to features",
+              "condition": false,
+              "items": [{
+                  "type": "options",
+                  "fieldName": "includedEffect",
+                  "label": "Apply an effect to features included the time extent",
+                  "options": [{
+                      "label": "Saturated",
+                      "value": "saturate"
+                    },
+                    {
+                      "label": "Contrast",
+                      "value": "contrast"
+                    },
+                    {
+                      "label": "Brightness",
+                      "value": "brightness"
+                    },
+                    {
+                      "label": "None",
+                      "value": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "options",
+                  "fieldName": "excludedEffect",
+                  "condition": false,
+                  "label": "Apply an effect to features NOT included the time extent",
+                  "options": [{
+                      "label": "Gray",
+                      "value": "gray"
+                    },
+                    {
+                      "label": "Sepia",
+                      "value": "sepia"
+                    },
+                    {
+                      "label": "Opacity",
+                      "value": "opacity"
+                    },
+                    {
+                      "label": "None",
+                      "value": "null"
+                    }
+                  ]
+                }
+              ]
+            }, {
+              "type": "conditional",
+              "fieldName": "liveData",
+              "label": "If your map contains live or recent time data you can overwrite the web map time options to show data for the period specified below.",
+              "items": [{
+                  "type": "number",
+                  "fieldName": "durationTime",
+                  "label": "Duration time",
+                  "tooltip": "Total time span of the slider",
+                  "constraints": {
+                    "min": 0,
+                    "places": 0
+                  }
+                },
+                {
+                  "type": "options",
+                  "fieldName": "durationPeriod",
+                  "label": "Duration period",
+                  "options": [{
+                      "label": "Seconds",
+                      "value": "seconds"
+                    },
+                    {
+                      "label": "Minutes",
+                      "value": "minutes"
+                    },
+                    {
+                      "label": "Hours",
+                      "value": "hours"
+                    },
+                    {
+                      "label": "Days",
+                      "value": "days"
+                    },
+                    {
+                      "label": "Weeks",
+                      "value": "weeks"
+                    },
+                    {
+                      "label": "Months",
+                      "value": "months"
+                    },
+                    {
+                      "label": "Years",
+                      "value": "years"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "fieldName": "highlightColor",
+          "label": "Selection color"
+        },
+        {
+          "type": "conditional",
+          "fieldName": "insetMap",
+          "label": "Inset map",
+          "condition": false,
+          "items": [{
+              "type": "options",
+              "fieldName": "insetPosition",
+              "label": "Inset map location",
+              "tooltip": "Select location for inset map",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "scaleList",
+              "fieldName": "insetScale",
+              "label": "Scale for inset map"
+            },
+            {
+              "type": "paragraph",
+              "value": "By default the inset map will use the same base map as the map. If you'd like to use a different base map select it from the list below."
+            },
+            {
+              "type": "orgBasemaps",
+              "fieldName": "insetBasemap",
+              "label": "Basemap for inset map"
+            },
+            {
+              "type": "radio",
+              "fieldName": "insetStyle",
+              "label": "Inset Map Style",
+              "items": [{
+                  "label": "Round",
+                  "value": "round",
+                  "checked": true
+                },
+                {
+                  "label": "Square",
+                  "value": "square"
+                }
+              ]
+            },
+            {
+              "type": "radio",
+              "fieldName": "insetLocationStyle",
+              "label": "Inset symbol style",
+              "items": [{
+                  "label": "Rectangle",
+                  "value": "extent"
+                },
+                {
+                  "label": "Marker",
+                  "value": "marker"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Search",
+      "fields": [{
+          "type": "conditional",
+          "fieldName": "search",
+          "label": "Search",
+          "condition": false,
+          "items": [{
+              "type": "search",
+              "fieldName": "searchConfig",
+              "label": "Configure search options"
+            },
+            {
+              "type": "options",
+              "fieldName": "searchPosition",
+              "label": "Search location",
+              "tooltip": "Select location for search control",
+              "options": [{
+                  "label": "Top right",
+                  "value": "top-right"
+                },
+                {
+                  "label": "Top left",
+                  "value": "top-left"
+                },
+                {
+                  "label": "Bottom right",
+                  "value": "bottom-right"
+                },
+                {
+                  "label": "Bottom left",
+                  "value": "bottom-left"
+                }
+              ]
+            },
+            {
+              "type": "boolean",
+              "fieldName": "searchOpenAtStart",
+              "label": "Search open at start"
+            }
+          ]
+        },
+        {
+          "type": "subcategory",
+          "label": "Custom URL parameter"
+        },
+        {
+          "type": "paragraph",
+          "value": "Set up the app to support a custom URL parameter. For example, if your map contains a feature layer with parcel information and you want to find parcels using a URL parameter, you can use this section to do so. Select a layer and search field, and then define the name of a custom parameter. Once you've defined these values, you can append the custom search to your application URL using the specified custom parameter name. For example, if I set the custom parameter value to parcels, a custom URL would look like this: index.html?parcel=3045."
+        },
+        {
+          "placeHolder": "i.e. parcels",
+          "label": "URL parameter name",
+          "fieldName": "customUrlParam",
+          "type": "string",
+          "tooltip": "Custom URL parameter name"
+        },
+        {
+          "type": "layerAndFieldSelector",
+          "fieldName": "customUrlLayer",
+          "label": "Layer to search for custom URL parameter value",
+          "tooltip": "Url parameter search layer",
+          "fields": [{
+            "multipleSelection": false,
+            "fieldName": "urlField",
+            "label": "URL parameter search field",
+            "tooltip": "URL parameter search field"
+          }],
+          "layerOptions": {
+            "supportedTypes": [
+              "FeatureLayer"
+            ],
+            "geometryTypes": [
+              "esriGeometryPoint",
+              "esriGeometryLine",
+              "esriGeometryPolyline",
+              "esriGeometryPolygon"
+            ]
+          }
+        }
+      ]
     }
+  ],
+  "values": {
+    "showPanelTheme": false,
+    "zoomLevels": false,
+    "mapZoom": false,
+    "mapZoomPosition": "top-left",
+    "home": false,
+    "rotation": true,
+    "homePosition": "top-left",
+    "disableScroll": false,
+    "legend": false,
+    "legendPosition": "top-left",
+    "legendOpenAtStart": false,
+    "legendStyle": "default",
+    "layerList": false,
+    "layerListAddLegend": false,
+    "layerListShowLegendOnLoad": false,
+    "layerListPosition": "top-left",
+    "layerListOpenAtStart": false,
+    "fullscreen": false,
+    "fullscreenPosition": "top-right",
+    "insetMap": false,
+    "insetPosition": "bottom-left",
+    "search": false,
+    "searchPosition": "top-right",
+    "searchOpenAtStart": true,
+    "share": false,
+    "sharePosition": "top-right",
+    "shareIncludeEmbed": false,
+    "shareIncludeServices": true,
+    "shareIncludeCopy": true,
+    "locate": false,
+    "locatePosition": "top-left",
+    "bookmarks": false,
+    "bookmarksPosition": "top-right",
+    "basemapToggle": false,
+    "basemapTogglePosition": "bottom-left",
+    "basemapToggleAltBasemap": "satellite",
+    "print": false,
+    "printPosition": "top-right",
+    "details": false,
+    "detailsPosition": "bottom-right",
+    "splash": false,
+    "highlightColor": "#00FFFF",
+    "detailsBackgroundColor": "#fff",
+    "detailsTextColor": "#333",
+    "hideBasemap": false,
+    "popupDockPosition": "auto",
+    "hoverPopup": false,
+    "hoverPopupPosition": "bottom-left",
+    "hoverPopupType": "floating",
+    "popupDisplayAttachmentType": "list",
+    "time": false,
+    "timeMode": "time-window",
+    "timeLoop": false,
+    "timeVisible": true,
+    "timePosition": "bottom-left",
+    "timeExpandAtStart": false,
+    "hideSliderBar": false,
+    "excludedEffect": "null",
+    "includedEffect": "null",
+    "timeEffect": false,
+    "liveData": false,
+    "durationTime": 1,
+    "durationPeriod": "weeks",
+    "swipe": false,
+    "swipeAlwaysEnabled": false,
+    "swipeButtonPosition": "top-right",
+    "mode": "horizontal"
+  }
 }
