@@ -175,7 +175,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                         ? "loading"
                         : "disabled";
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(ShareViewModel.prototype, "embedCode", {
@@ -187,7 +187,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             get: function () {
                 return "<iframe src=\"" + this.shareUrl + "\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>";
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         //----------------------------------

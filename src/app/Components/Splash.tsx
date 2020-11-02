@@ -43,7 +43,7 @@ class Splash extends declared(Widget) {
 					</h3>
 					<p>{description}</p>
 					<div class="text-right">
-						<button title={this.config.splashButtonText} class="btn btn-clear js-modal-toggle app-button">
+						<button title={this.config.splashButtonText} data-modal={this.modalId} class="btn btn-clear js-modal-toggle app-button">
 							{this.config.splashButtonText}
 						</button>
 					</div>
@@ -59,6 +59,7 @@ class Splash extends declared(Widget) {
 		const splashButton = document.createElement('button');
 		splashButton.setAttribute('data-modal', this.modalId);
 		splashButton.setAttribute('title', i18n.widgets.splash.tooltip);
+
 		const headerButtonClasses = [
 			CSS.modaltoggle,
 			CSS.button,
@@ -70,11 +71,11 @@ class Splash extends declared(Widget) {
 		];
 
 		splashButton.classList.add(...headerButtonClasses);
-		/*åsplashButton.addEventListener("click", () => {
-      calcite.bus.on("modal:open", () => {
-        console.log("Opened focus should be trapped")
-      });
-    });*/
+		splashButton.addEventListener("click", () => {
+			/*  calcite.bus.on("modal:open", () => {
+				console.log("Opened focus should be trapped")
+			  });*/
+		});
 		calcite.bus.on('modal:close', () => {
 			splashButton.focus();
 		});
@@ -85,15 +86,21 @@ class Splash extends declared(Widget) {
 	}
 
 	public showSplash() {
-		calcite.init();
+		//	calcite.init();
 		if (this.config.splashOnStart) {
 			// enable splash screen when app loads then
 			// set info in session storage when its closed
 			// so we don't open again this session.
-			if (!sessionStorage.getItem('disableSplash')) {
-				calcite.bus.emit('modal:open', { id: this.modalId });
-			}
-			sessionStorage.setItem('disableSplash', 'true');
+			require(['./app/calcite-web-1.2.5/dist/js//calcite-web.min.js'], function (calcite) {
+				// use calcite
+				calcite.init();
+				if (!sessionStorage.getItem('disableSplash')) {
+
+					calcite.bus.emit('modal:open', { id: this.modalId });
+				}
+				sessionStorage.setItem('disableSplash', 'true');
+			});
+
 		}
 	}
 }

@@ -144,12 +144,14 @@ class MapExample {
                   if (popupLayer.hasOwnProperty("popupTemplate")) {
                     const layer = popupLayer as esri.FeatureLayer;
                     const template = layer.popupTemplate;
-                    if (Array.isArray(template.content)) {
-                      template.content.forEach((content: any) => {
-                        if (content.type === "attachments") {
-                          content.displayType = "preview";
-                        }
-                      });
+                    if (template && template.content) {
+                      if (Array.isArray(template.content)) {
+                        template.content.forEach((content: any) => {
+                          if (content.type === "attachments") {
+                            content.displayType = "preview";
+                          }
+                        });
+                      }
                     }
                   }
                 });
@@ -799,7 +801,7 @@ class MapExample {
           mode: "floating",
           expandTooltip: timeSlider.label,
           group: timePosition.indexOf("bottom") !== -1 ? "bottom" : "top",
-          content: timeSlider,
+          content: timeSlider.container,
           expanded: timeExpandAtStart
         });
 

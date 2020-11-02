@@ -182,3 +182,7 @@ body {
 
 .share-toggle {
   border-width: 0; }
+
+.panel {
+  max-height: 90vh;
+  overflow: auto; }

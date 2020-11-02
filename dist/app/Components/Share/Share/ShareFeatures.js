@@ -37,7 +37,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 }
                 this._set("copyToClipboard", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(ShareFeatures.prototype, "shareServices", {
@@ -48,7 +48,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 }
                 this._set("shareServices", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         __decorate([

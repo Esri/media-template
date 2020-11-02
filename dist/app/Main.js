@@ -159,12 +159,14 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                                     if (popupLayer.hasOwnProperty("popupTemplate")) {
                                         var layer = popupLayer;
                                         var template = layer.popupTemplate;
-                                        if (Array.isArray(template.content)) {
-                                            template.content.forEach(function (content) {
-                                                if (content.type === "attachments") {
-                                                    content.displayType = "preview";
-                                                }
-                                            });
+                                        if (template && template.content) {
+                                            if (Array.isArray(template.content)) {
+                                                template.content.forEach(function (content) {
+                                                    if (content.type === "attachments") {
+                                                        content.displayType = "preview";
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
                                 });
@@ -925,7 +927,7 @@ define(["require", "exports", "dojo/i18n!./nls/resources", "ApplicationBase/supp
                                 mode: "floating",
                                 expandTooltip: timeSlider_1.label,
                                 group: timePosition.indexOf("bottom") !== -1 ? "bottom" : "top",
-                                content: timeSlider_1,
+                                content: timeSlider_1.container,
                                 expanded: timeExpandAtStart
                             });
                             view.ui.add(expand, timePosition);

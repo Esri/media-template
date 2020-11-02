@@ -106,7 +106,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 return ready ? "ready" :
                     view ? "loading" : "disabled";
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         //--------------------------------------------------------------------------

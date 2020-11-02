@@ -44,7 +44,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                     widget_1.tsx("h3", { id: "splash-title", class: "trailer-half" }, this.config.splashTitle),
                     widget_1.tsx("p", null, description),
                     widget_1.tsx("div", { class: "text-right" },
-                        widget_1.tsx("button", { title: this.config.splashButtonText, class: "btn btn-clear js-modal-toggle app-button" }, this.config.splashButtonText)))));
+                        widget_1.tsx("button", { title: this.config.splashButtonText, "data-modal": this.modalId, class: "btn btn-clear js-modal-toggle app-button" }, this.config.splashButtonText)))));
             return widget_1.tsx("div", null, splashContent);
         };
         Splash.prototype.createToolbarButton = function () {
@@ -63,11 +63,11 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 'icon-ui-description'
             ];
             (_a = splashButton.classList).add.apply(_a, headerButtonClasses);
-            /*åsplashButton.addEventListener("click", () => {
-          calcite.bus.on("modal:open", () => {
-            console.log("Opened focus should be trapped")
-          });
-        });*/
+            splashButton.addEventListener("click", function () {
+                /*  calcite.bus.on("modal:open", () => {
+                    console.log("Opened focus should be trapped")
+                  });*/
+            });
             calcite.bus.on('modal:close', function () {
                 splashButton.focus();
             });
@@ -77,15 +77,19 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             return splashButton;
         };
         Splash.prototype.showSplash = function () {
-            calcite.init();
+            //	calcite.init();
             if (this.config.splashOnStart) {
                 // enable splash screen when app loads then
                 // set info in session storage when its closed
                 // so we don't open again this session.
-                if (!sessionStorage.getItem('disableSplash')) {
-                    calcite.bus.emit('modal:open', { id: this.modalId });
-                }
-                sessionStorage.setItem('disableSplash', 'true');
+                require(['./app/calcite-web-1.2.5/dist/js//calcite-web.min.js'], function (calcite) {
+                    // use calcite
+                    calcite.init();
+                    if (!sessionStorage.getItem('disableSplash')) {
+                        calcite.bus.emit('modal:open', { id: this.modalId });
+                    }
+                    sessionStorage.setItem('disableSplash', 'true');
+                });
             }
         };
         __decorate([

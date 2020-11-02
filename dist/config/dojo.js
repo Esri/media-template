@@ -14,28 +14,27 @@
       // "esri-native-promise": 1
     },
     packages: [{
-        name: "Application",
-        location: packagePath + "/app",
-        main: "Main"
-      },
-      {
-        name: "Custom",
-        location: packagePath + "/app"
-      },
-      {
-        name: "ApplicationBase",
-        location: packagePath + "/app/application-base-js",
-        main: "ApplicationBase"
-      },
-      {
-        name: "config",
-        location: packagePath + "/config"
-      }, {
-        name: "moment",
-        location: packagePath + "/app/moment"
-      }
+      name: "Application",
+      location: packagePath + "/app",
+      main: "Main"
+    },
+    {
+      name: "Custom",
+      location: packagePath + "/app"
+    },
+    {
+      name: "ApplicationBase",
+      location: packagePath + "/app/application-base-js",
+      main: "ApplicationBase"
+    },
+    {
+      name: "config",
+      location: packagePath + "/config"
+    }, {
+      name: "moment",
+      location: packagePath + "/app/moment"
+    }
     ]
   };
   window["dojoConfig"] = config;
 })();
-//# sourceMappingURL=dojo.js.map

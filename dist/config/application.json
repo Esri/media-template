@@ -4,7 +4,7 @@
   "webmap": "default",
   "webscene": "",
   "portalUrl": "https://www.arcgis.com",
-  "oauthappid": "",
+  "oauthappid": null,
   "proxyUrl": "",
   "units": "",
   "viewMinScale": null,
