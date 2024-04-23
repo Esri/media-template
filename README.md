@@ -1,4 +1,7 @@
-# media-template
+
+ArcGIS Configurable Apps will be retired in 2025. The ArcGIS Configurable Apps source code repro is deprecated and will not receive further updates. In addition, this repository will be removed in October 2025, along with the October 2025 ArcGIS Online update.
+
+# Deprecated media-template
 Source code for the Media configurable app available in the ArcGIS Online template gallery. 
 
 Media Map is a configurable app template for displaying an interactive map with basic tools and a set of options for limiting map navigation. Designed to fit into small spaces on a web page or as a standalone app.
